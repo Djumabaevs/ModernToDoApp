@@ -28,6 +28,7 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder> {
     }
 
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
-
+        val currentItem = getItem(position)
+        holder.bind(currentItem)
     }
 }
