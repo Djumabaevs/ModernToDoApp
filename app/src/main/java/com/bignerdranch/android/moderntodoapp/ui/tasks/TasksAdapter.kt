@@ -3,12 +3,13 @@ package com.bignerdranch.android.moderntodoapp.ui.tasks
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.moderntodoapp.data.Task
 import com.bignerdranch.android.moderntodoapp.databinding.ItemTaskBinding
 
-class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder> {
+class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DiffCallback()) {
 
     class TasksViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
@@ -30,5 +31,15 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder> {
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem)
+    }
+
+    class DiffCallback : DiffUtil.ItemCallback<Task>() {
+
+        override fun areItemsTheSame(oldItem: Task, newItem: Task) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Task, newItem: Task) =
+            oldItem == newItem
+
     }
 }
