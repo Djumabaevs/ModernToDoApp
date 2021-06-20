@@ -1,5 +1,7 @@
 package com.bignerdranch.android.moderntodoapp.ui.tasks
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,5 +20,14 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder> {
             }
 
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
+        val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TasksViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
+
     }
 }
