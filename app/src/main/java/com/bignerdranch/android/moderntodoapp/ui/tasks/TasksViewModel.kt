@@ -3,12 +3,14 @@ package com.bignerdranch.android.moderntodoapp.ui.tasks
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.moderntodoapp.data.PreferencesManager
 import com.bignerdranch.android.moderntodoapp.data.SortOrder
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 
 class TasksViewModel @ViewModelInject constructor(
     private val taskDao: TaskDao,
@@ -34,6 +36,14 @@ class TasksViewModel @ViewModelInject constructor(
         /*Triple*/Pair(query,  filterPreferences)
     }.flatMapLatest { (query,  filterPreferences) ->
         taskDao.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
+    }
+
+    fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
+        preferencesManager.updateSortOrder(sortOrder)
+    }
+
+    fun onHideCompletedClick(hideCompleted: Boolean) = viewModelScope.launch {
+        preferencesManager.updateHideCompleted(hideCompleted)
     }
 
         val tasks = taskFlow.asLiveData()
