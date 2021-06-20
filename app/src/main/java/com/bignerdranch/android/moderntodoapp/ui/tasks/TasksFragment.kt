@@ -28,5 +28,9 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
                 setHasFixedSize(true)
             }
         }
+
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            taskAdapter.submitList(it)
+        }
     }
 }
