@@ -1,7 +1,6 @@
 package com.bignerdranch.android.moderntodoapp.data
 
 import androidx.room.*
-import com.bignerdranch.android.moderntodoapp.ui.tasks.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
