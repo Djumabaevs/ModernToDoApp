@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 
 class TasksViewModel @ViewModelInject constructor(
     private val taskDao: TaskDao
@@ -12,6 +13,10 @@ class TasksViewModel @ViewModelInject constructor(
     : ViewModel() {
 
         val searchQuery = MutableStateFlow("")
+
+    private val  taskFlow = searchQuery.flatMapLatest {
+        taskDao.getTasks(it)
+    }
 
         val tasks = taskDao.getTasks("bla").asLiveData()
 
