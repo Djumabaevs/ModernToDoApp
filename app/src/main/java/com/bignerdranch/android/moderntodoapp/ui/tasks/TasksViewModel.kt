@@ -25,7 +25,7 @@ class TasksViewModel @ViewModelInject constructor(
         query, sortOrder, hideCompleted ->
         Triple(query, sortOrder, hideCompleted)
     }.flatMapLatest { (query, sortOrder, hideCompleted) ->
-        taskDao.getTasks(query, sortOrder, hideCompleted)
+        taskDao.getTasksSortedByName(query, sortOrder, hideCompleted)
     }
 
         val tasks = taskFlow.asLiveData()
