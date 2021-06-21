@@ -55,7 +55,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
                     viewModel.onTaskSwiped(task)
                 }
 
-            })
+            }).attachToRecyclerView(recyclerViewTasks)
         }
 
         viewModel.tasks.observe(viewLifecycleOwner) {
