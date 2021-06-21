@@ -66,7 +66,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun onUndoDeleteClick(task: Task) = viewModelScope.launch {
-
+        taskDao.insert(task)
     }
 
     sealed class TasksEvent {

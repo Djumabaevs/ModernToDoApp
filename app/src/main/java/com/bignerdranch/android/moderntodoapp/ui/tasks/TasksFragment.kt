@@ -71,7 +71,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
                         Snackbar.make(requireView(), "Task deleted", Snackbar.LENGTH_LONG)
                             .setAction("UNDO") {
                                 viewModel.onUndoDeleteClick(event.task)
-                            }
+                            }.show()
                     }
                 }
             }

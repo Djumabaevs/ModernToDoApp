@@ -10,4 +10,9 @@
         android:name="com.bignerdranch.android.moderntodoapp.ui.tasks.TasksFragment"
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/addEditTaskFragment"
+        android:name="com.bignerdranch.android.moderntodoapp.ui.addedittask.AddEditTaskFragment"
+        android:label="fragment_add_edit_task"
+        tools:layout="@layout/fragment_add_edit_task" />
 </navigation>
