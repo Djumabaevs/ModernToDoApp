@@ -8,6 +8,7 @@ import com.bignerdranch.android.moderntodoapp.data.PreferencesManager
 import com.bignerdranch.android.moderntodoapp.data.SortOrder
 import com.bignerdranch.android.moderntodoapp.data.Task
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -21,6 +22,8 @@ class TasksViewModel @ViewModelInject constructor(
     val searchQuery = MutableStateFlow("")
 
     val preferencesFlow = preferencesManager.preferencesFlow
+
+    private val tasksEventChannel = Channel<TasksEvent>()
 
 /*
     val sortOrder = MutableStateFlow(SortOrder.BY_DATE)
@@ -57,6 +60,10 @@ class TasksViewModel @ViewModelInject constructor(
 
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
         taskDao.delete(task)
+    }
+
+    sealed class TasksEvent {
+        data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
     }
 
 }
