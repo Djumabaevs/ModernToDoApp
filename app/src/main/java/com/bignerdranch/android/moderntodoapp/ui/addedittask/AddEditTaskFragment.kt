@@ -2,6 +2,7 @@ package com.bignerdranch.android.moderntodoapp.ui.addedittask
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bignerdranch.android.moderntodoapp.R
@@ -22,6 +23,9 @@ class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
             editTextTaskName.setText(viewModel.taskName)
             checkBoxImportant.isChecked = viewModel.taskImportance
             checkBoxImportant.jumpDrawablesToCurrentState()
+            textViewDateCreated.isVisible = viewModel.task != null
+            textViewDateCreated.text = "Created: ${viewModel.task?.createdDateFormatted}"
+
         }
     }
 }
