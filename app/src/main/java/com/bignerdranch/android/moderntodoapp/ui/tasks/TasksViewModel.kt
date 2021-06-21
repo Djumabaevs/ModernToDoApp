@@ -1,9 +1,8 @@
 package com.bignerdranch.android.moderntodoapp.ui.tasks
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bignerdranch.android.moderntodoapp.data.PreferencesManager
 import com.bignerdranch.android.moderntodoapp.data.SortOrder
 import com.bignerdranch.android.moderntodoapp.data.Task
@@ -17,10 +16,13 @@ import kotlinx.coroutines.launch
 
 class TasksViewModel @ViewModelInject constructor(
     private val taskDao: TaskDao,
-    private val preferencesManager: PreferencesManager
+    private val preferencesManager: PreferencesManager,
+    @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
-    val searchQuery = MutableStateFlow("")
+//    val searchQuery = MutableStateFlow("")
+
+    val searchQuery = state.getLiveData("searchQuery", "")
 
     val preferencesFlow = preferencesManager.preferencesFlow
 
@@ -33,7 +35,7 @@ class TasksViewModel @ViewModelInject constructor(
 */
 
     private val  taskFlow = combine (
-        searchQuery,
+        searchQuery.asFlow(),
         preferencesFlow
         /*sortOrder,
         hideCompleted*/

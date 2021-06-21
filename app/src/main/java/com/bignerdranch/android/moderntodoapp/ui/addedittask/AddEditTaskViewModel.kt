@@ -20,5 +20,9 @@ class AddEditTaskViewModel @ViewModelInject constructor(
         state.set("taskName", value)
     }
 
-
+    var taskImportance = state.get<Boolean>("taskImportance") ?: task?.important ?: false
+        set(value) {
+            field = value
+            state.set("taskImportance", value)
+        }
 }
