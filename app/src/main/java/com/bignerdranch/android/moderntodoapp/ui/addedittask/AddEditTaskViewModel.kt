@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.moderntodoapp.data.Task
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class AddEditTaskViewModel @ViewModelInject constructor(
@@ -28,9 +30,13 @@ class AddEditTaskViewModel @ViewModelInject constructor(
             state.set("taskImportance", value)
         }
 
+    private val addEditTaskEventChannel = Channel<AddEditTaskEvent>()
+    val addEditTaskEvent = addEditTaskEventChannel.receiveAsFlow()
+
     fun onSaveClick() {
         if(taskName.isBlank()) {
             //show invalid input message
+            showInvalidInputMessage("Name cannot be empty")
         }
         if (task != null) {
             val updatedTask = task.copy(name = taskName, important = taskImportance)
@@ -47,6 +53,10 @@ class AddEditTaskViewModel @ViewModelInject constructor(
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
+    }
+
+    private fun showInvalidInputMessage(text: String) = viewModelScope.launch {
+        addEditTaskEventChannel.send(AddEditTaskEvent.ShowInvalidInputMessage(text))
     }
 
     sealed class AddEditTaskEvent {
