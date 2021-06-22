@@ -5,6 +5,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bignerdranch.android.moderntodoapp.ADD_TASK_RESULT_OK
+import com.bignerdranch.android.moderntodoapp.EDIT_TASK_RESULT_OK
 import com.bignerdranch.android.moderntodoapp.data.Task
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
 import kotlinx.coroutines.channels.Channel
@@ -49,10 +51,12 @@ class AddEditTaskViewModel @ViewModelInject constructor(
 
     private fun createTask(task: Task) = viewModelScope.launch {
         taskDao.insert(task)
+        addEditTaskEventChannel.send(AddEditTaskEvent.NavigateBackWithResult(ADD_TASK_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
+        addEditTaskEventChannel.send(AddEditTaskEvent.NavigateBackWithResult(EDIT_TASK_RESULT_OK))
     }
 
     private fun showInvalidInputMessage(text: String) = viewModelScope.launch {
