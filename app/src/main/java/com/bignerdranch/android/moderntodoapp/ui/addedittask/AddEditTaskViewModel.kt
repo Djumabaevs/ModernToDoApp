@@ -4,8 +4,10 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.moderntodoapp.data.Task
 import com.bignerdranch.android.moderntodoapp.data.TaskDao
+import kotlinx.coroutines.launch
 
 class AddEditTaskViewModel @ViewModelInject constructor(
     private val taskDao: TaskDao,
@@ -37,5 +39,13 @@ class AddEditTaskViewModel @ViewModelInject constructor(
             val newTask = Task(name = taskName, important = taskImportance)
             createTask(newTask)
         }
+    }
+
+    private fun createTask(task: Task) = viewModelScope.launch {
+
+    }
+
+    private fun updateTask(task: Task) = viewModelScope.launch {
+
     }
 }
