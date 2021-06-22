@@ -42,10 +42,15 @@ class AddEditTaskViewModel @ViewModelInject constructor(
     }
 
     private fun createTask(task: Task) = viewModelScope.launch {
-
+        taskDao.insert(task)
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
+        taskDao.update(task)
+    }
 
+    sealed class AddEditTaskEvent {
+        data class ShowInvalidInputMessage(val msg: String) : AddEditTaskEvent()
+        data class NavigateBackWithResult(val result: Int) : AddEditTaskEvent()
     }
 }
