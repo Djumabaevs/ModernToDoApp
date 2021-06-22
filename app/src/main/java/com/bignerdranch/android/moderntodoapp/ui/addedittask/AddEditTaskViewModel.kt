@@ -25,4 +25,17 @@ class AddEditTaskViewModel @ViewModelInject constructor(
             field = value
             state.set("taskImportance", value)
         }
+
+    fun onSaveClick() {
+        if(taskName.isBlank()) {
+            //show invalid input message
+        }
+        if (task != null) {
+            val updatedTask = task.copy(name = taskName, important = taskImportance)
+            updateTask(updatedTask)
+        } else {
+            val newTask = Task(name = taskName, important = taskImportance)
+            createTask(newTask)
+        }
+    }
 }
