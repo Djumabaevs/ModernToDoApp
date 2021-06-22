@@ -56,7 +56,9 @@ class TasksViewModel @ViewModelInject constructor(
         preferencesManager.updateHideCompleted(hideCompleted)
     }
 
-    fun onTaskSelected(task: Task) {}
+    fun onTaskSelected(task: Task) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.NavigateToEditTaskScreen(task))
+    }
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
         taskDao.update(task.copy(completed = isChecked))
@@ -72,7 +74,7 @@ class TasksViewModel @ViewModelInject constructor(
     }
 
     fun onAddNewTaskClick() = viewModelScope.launch {
-
+        tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
     sealed class TasksEvent {
