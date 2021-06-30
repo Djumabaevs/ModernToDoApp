@@ -39,6 +39,8 @@ class AddEditTaskViewModel @ViewModelInject constructor(
         if(taskName.isBlank()) {
             //show invalid input message
             showInvalidInputMessage("Name cannot be empty")
+            return
+            
         }
         if (task != null) {
             val updatedTask = task.copy(name = taskName, important = taskImportance)
